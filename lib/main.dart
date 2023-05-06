@@ -53,13 +53,13 @@ class MyHomePage extends StatefulWidget {
 
 enum TranactionType { buy, sell }
 
-// ignore: non_constant_identifier_names
+// ignore: non_constant_identifier_names, constant_identifier_names
 const String NO_RESULT_TEXT = "No Result";
 
 class _MyHomePageState extends State<MyHomePage> {
-  static const double tMul = 1.005;
-  static const double slMul = 0.998;
-  static const double rsiDiv = 0.8;
+  static const double tFactor = 1.005;
+  static const double slFactor = 0.998;
+  static const double rsiFactor = 0.8;
 
   final inputOneController = TextEditingController();
   final inputTwoController = TextEditingController();
@@ -89,17 +89,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
 //BUY - Calculation for buy transaction.
     if (transaction == TranactionType.buy) {
-      double t1 = input_1 * tMul;
-      double t2 = input_1 * pow(tMul, 2);
-      double t3 = input_1 * pow(tMul, 3);
+      double t1 = input_1 * tFactor;
+      double t2 = input_1 * pow(tFactor, 2);
+      double t3 = input_1 * pow(tFactor, 3);
 
-      double sl1 = input_1 * slMul;
-      double sl2 = input_1 * pow(slMul, 2);
-      double sl3 = input_1 * pow(slMul, 3);
+      double sl1 = input_1 * slFactor;
+      double sl2 = input_1 * pow(slFactor, 2);
+      double sl3 = input_1 * pow(slFactor, 3);
 
       String advResult = "";
       if (calcMore && inputOneController.text.trim().isNotEmpty) {
-        double rsi = input_2 / rsiDiv;
+        double rsi = input_2 / rsiFactor;
         double strength = rsi / input_2;
         advResult = '\n-----\nRSI = $rsi \nStrength = $strength';
       }
@@ -112,17 +112,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //SELL - Calculation for sell transaction.
     else if (transaction == TranactionType.sell) {
-      double t1 = input_1 / tMul;
-      double t2 = input_1 / pow(tMul, 2);
-      double t3 = input_1 / pow(tMul, 3);
+      double t1 = input_1 / tFactor;
+      double t2 = input_1 / pow(tFactor, 2);
+      double t3 = input_1 / pow(tFactor, 3);
 
-      double sl1 = input_1 / slMul;
-      double sl2 = input_1 / pow(slMul, 2);
-      double sl3 = input_1 / pow(slMul, 3);
+      double sl1 = input_1 / slFactor;
+      double sl2 = input_1 / pow(slFactor, 2);
+      double sl3 = input_1 / pow(slFactor, 3);
 
       String advResult = "";
       if (calcMore && inputTwoController.text.trim().isNotEmpty) {
-        double rsi = input_2 * rsiDiv;
+        double rsi = input_2 * rsiFactor;
         double strength = input_2 / rsi;
         advResult = '\n-----\nRSI = $rsi \nStrength = $strength';
       }
