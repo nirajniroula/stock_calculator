@@ -77,6 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       result = NO_RESULT_TEXT;
     });
+    inputOneController.clear();
+    inputTwoController.clear();
   }
 
   void _setResult() {
@@ -85,6 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ? inputTwoController.text.trim()
         : "0.0");
 
+//BUY - Calculation for buy transaction.
     if (transaction == TranactionType.buy) {
       double t1 = input_1 * tMul;
       double t2 = input_1 * pow(tMul, 2);
@@ -105,7 +108,10 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         result = allResult;
       });
-    } else if (transaction == TranactionType.sell) {
+    }
+
+    //SELL - Calculation for sell transaction.
+    else if (transaction == TranactionType.sell) {
       double t1 = input_1 / tMul;
       double t2 = input_1 / pow(tMul, 2);
       double t3 = input_1 / pow(tMul, 3);
@@ -116,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       String advResult = "";
       if (calcMore && inputTwoController.text.trim().isNotEmpty) {
-        double rsi = input_2 / rsiDiv;
+        double rsi = input_2 * rsiDiv;
         double strength = input_2 / rsi;
         advResult = '\n-----\nRSI = $rsi \nStrength = $strength';
       }
@@ -164,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     decoration: BoxDecoration(
                         color: Colors.blue.shade50,
                         border: Border.all(
-                          color: Colors.blue.shade200,
+                          color: Colors.blue.shade300,
                         ),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8))),
@@ -262,6 +268,14 @@ class _MyHomePageState extends State<MyHomePage> {
                           )),
                       const SizedBox(width: 24), // give it width
                       OutlinedButton(
+                          style: result == NO_RESULT_TEXT
+                              ? null
+                              : OutlinedButton.styleFrom(
+                                  side: const BorderSide(
+                                    width: 1.5,
+                                    color: Colors.blue,
+                                  ),
+                                ),
                           onPressed: result == NO_RESULT_TEXT
                               ? null
                               : () {
