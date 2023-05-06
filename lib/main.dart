@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (calcMore && inputOneController.text.trim().isNotEmpty) {
         double rsi = input_2 / rsiDiv;
         double strength = rsi / input_2;
-        advResult = '\n RSI = $rsi \nStrength = $strength';
+        advResult = '\n-----\nRSI = $rsi \nStrength = $strength';
       }
       String allResult =
           'T1 = $t1 \nT2 = $t2 \nT3 = $t3 \n----- \nSL1 = $sl1 \nSL2 = $sl2 \nSL3 = $sl3 $advResult';
@@ -118,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if (calcMore && inputTwoController.text.trim().isNotEmpty) {
         double rsi = input_2 / rsiDiv;
         double strength = input_2 / rsi;
-        advResult = '\n RSI = $rsi \nStrength = $strength';
+        advResult = '\n-----\nRSI = $rsi \nStrength = $strength';
       }
       String allResult =
           'T1 = $t1 \nT2 = $t2 \nT3 = $t3 \n----- \nSL1 = $sl1 \nSL2 = $sl2 \nSL3 = $sl3 $advResult';
@@ -141,123 +141,142 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32.0),
-                child: Container(
-                  // height: 50,
-                  alignment: Alignment.bottomRight,
-                  constraints: BoxConstraints(
-                    minHeight: MediaQuery.of(context).size.height / 3,
-                  ),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Colors.blue.shade50,
-                      border: Border.all(
-                        color: Colors.blue.shade200,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 32.0),
+                  child: Container(
+                    // height: 50,
+                    alignment: Alignment.bottomRight,
+                    constraints: BoxConstraints(
+                      minHeight: MediaQuery.of(context).size.height / 3,
+                    ),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.blue.shade50,
+                        border: Border.all(
+                          color: Colors.blue.shade200,
+                        ),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        result,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(8))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      result,
-                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                 ),
-              ),
-              RadioButtons(
-                  onValueChanged: _onRadioValueChanged, value: transaction),
-              TextField(
-                controller: inputOneController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter a price',
-                ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d*)')),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 24.0),
-                child: Row(
-                  children: [
-                    Text(
-                      'Calculate RSA and Strength',
-                      style: Theme.of(context).textTheme.labelLarge,
-                    ),
-                    Switch(
-                      // This bool value toggles the switch.
-                      value: calcMore,
-                      activeColor: Colors.blue,
-                      onChanged: (bool value) {
-                        // This is called when the user toggles the switch.
-                        setState(() {
-                          calcMore = value;
-                        });
-                      },
-                    ),
+                RadioButtons(
+                    onValueChanged: _onRadioValueChanged, value: transaction),
+                TextField(
+                  controller: inputOneController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter a price',
+                  ),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d*)')),
                   ],
                 ),
-              ),
-              TextField(
-                controller: inputTwoController,
-                enabled: calcMore,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter a value',
-                ),
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d*)')),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32.0),
-                child: Row(
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          if (inputOneController.text.trim().isEmpty) {
-                            const snackBar = SnackBar(
-                              content: Text('Please enter a price!'),
-                              showCloseIcon: true,
-                              closeIconColor: Colors.white,
-                              backgroundColor: Colors.amber,
-                            );
-
-                            // Find the ScaffoldMessenger in the widget tree
-                            // and use it to show a SnackBar.
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          } else {
-                            _setResult();
-                          }
+                Padding(
+                  padding: const EdgeInsets.only(top: 24.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Calculate RSA and Strength',
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      Switch(
+                        // This bool value toggles the switch.
+                        value: calcMore,
+                        activeColor: Colors.blue,
+                        onChanged: (bool value) {
+                          // This is called when the user toggles the switch.
+                          setState(() {
+                            calcMore = value;
+                          });
                         },
-                        child: const Text("CALCULATE")),
-                    const SizedBox(width: 24), // give it width
-                    OutlinedButton(
-                        onPressed: result == NO_RESULT_TEXT
-                            ? null
-                            : () {
-                                _reset();
-                              },
-                        child: const Text("RESET")),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
-              )
-            ],
+                Visibility(
+                  maintainSize: true,
+                  maintainAnimation: true,
+                  maintainState: true,
+                  visible: calcMore,
+                  child: TextField(
+                    controller: inputTwoController,
+                    enabled: calcMore,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter a value',
+                    ),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'(^\d*\.?\d*)')),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 32.0),
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            if (inputOneController.text.trim().isEmpty) {
+                              const snackBar = SnackBar(
+                                content: Text('Please enter a price!'),
+                                showCloseIcon: true,
+                                closeIconColor: Colors.white,
+                                backgroundColor: Colors.amber,
+                              );
+
+                              // Find the ScaffoldMessenger in the widget tree
+                              // and use it to show a SnackBar.
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            } else {
+                              _setResult();
+                            }
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 16.0, horizontal: 32.0),
+                            child: Text("CALCULATE"),
+                          )),
+                      const SizedBox(width: 24), // give it width
+                      OutlinedButton(
+                          onPressed: result == NO_RESULT_TEXT
+                              ? null
+                              : () {
+                                  _reset();
+                                },
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 16.0, horizontal: 32.0),
+                            child: Text("RESET"),
+                          )),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
