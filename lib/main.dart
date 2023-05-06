@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
       double sl3 = input_1 * pow(slFactor, 3);
 
       String advResult = "";
-      if (calcMore && inputOneController.text.trim().isNotEmpty) {
+      if (calcMore && inputTwoController.text.trim().isNotEmpty) {
         double rsi = input_2 / rsiFactor;
         double strength = rsi / input_2;
         advResult = '\n-----\nRSI = $rsi \nStrength = $strength';
@@ -250,7 +250,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 content: Text('Please enter a price!'),
                                 showCloseIcon: true,
                                 closeIconColor: Colors.white,
-                                backgroundColor: Colors.amber,
+                                backgroundColor: Colors.red,
                               );
 
                               // Find the ScaffoldMessenger in the widget tree
