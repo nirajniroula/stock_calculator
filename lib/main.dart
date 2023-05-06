@@ -147,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -196,7 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Row(
                     children: [
                       Text(
-                        'Calculate RSA and Strength',
+                        'Calculate RSI and Strength',
                         style: Theme.of(context).textTheme.labelLarge,
                       ),
                       Switch(
@@ -268,8 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   _reset();
                                 },
                           child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 16.0, horizontal: 32.0),
+                            padding: EdgeInsets.all(16.0),
                             child: Text("RESET"),
                           )),
                     ],

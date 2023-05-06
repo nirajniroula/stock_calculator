@@ -19,29 +19,37 @@ class RadioButtons extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Row(
         children: [
-          Expanded(
-            child: ListTile(
-              title: const Text('Buy'),
-              leading: Radio<TranactionType>(
+          Row(
+            children: [
+              Radio<TranactionType>(
                 value: TranactionType.buy,
                 groupValue: value,
                 onChanged: (TranactionType? value) {
                   onValueChanged(value);
                 },
               ),
-            ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text('Buy'),
+              ),
+            ],
           ),
-          Expanded(
-            child: ListTile(
-              title: const Text('Sell'),
-              leading: Radio<TranactionType>(
+          const SizedBox(width: 24), // give it width
+
+          Row(
+            children: [
+              Radio<TranactionType>(
                 value: TranactionType.sell,
                 groupValue: value,
                 onChanged: (TranactionType? value) {
                   onValueChanged(value);
                 },
               ),
-            ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text('Sell'),
+              ),
+            ],
           ),
         ],
       ),
